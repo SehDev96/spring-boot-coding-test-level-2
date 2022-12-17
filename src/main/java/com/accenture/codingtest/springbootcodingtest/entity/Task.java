@@ -14,19 +14,19 @@ public class Task {
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "title",nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "status",nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name = "project_id",nullable = false)
+    @Column(name = "project_id", nullable = false)
     private UUID project_id;
 
-    @Column(name = "user_id",nullable = false)
+    @Column(name = "user_id", nullable = false)
     private UUID user_id;
 
 }

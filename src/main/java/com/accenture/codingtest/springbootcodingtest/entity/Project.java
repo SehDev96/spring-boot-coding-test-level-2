@@ -14,6 +14,6 @@ public class Project {
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "name",nullable = false,unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 }
