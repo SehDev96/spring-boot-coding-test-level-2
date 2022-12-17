@@ -1,5 +1,6 @@
 package com.accenture.codingtest.springbootcodingtest.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,5 +19,6 @@ public class User {
     private String username;
 
     @Column(name = "password", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 }
