@@ -1,5 +1,6 @@
 package com.accenture.codingtest.springbootcodingtest.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,12 +24,10 @@ public class Task {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @Column(name = "project_id",nullable = false)
+    private UUID project_id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id",nullable = false)
+    private UUID user_id;
 
 }

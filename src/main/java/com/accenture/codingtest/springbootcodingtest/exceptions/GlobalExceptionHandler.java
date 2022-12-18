@@ -2,6 +2,7 @@ package com.accenture.codingtest.springbootcodingtest.exceptions;
 import com.accenture.codingtest.springbootcodingtest.model.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -48,6 +49,12 @@ public class GlobalExceptionHandler {
                     HttpStatus.BAD_REQUEST.value(),
                     HttpStatus.BAD_REQUEST.getReasonPhrase(),
                     "An Unexpected Error has Occured!"
+            ),HttpStatus.BAD_REQUEST);
+        } else if (ex instanceof HttpRequestMethodNotSupportedException){
+            return new ResponseEntity<>(new ApiErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(),
+                    "Unsupported Http Method"
             ),HttpStatus.BAD_REQUEST);
         }
 

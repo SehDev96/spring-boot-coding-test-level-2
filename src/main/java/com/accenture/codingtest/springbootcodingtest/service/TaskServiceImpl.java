@@ -63,12 +63,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Map<String, String> patchTask(Map<String, String> fields) {
+    public Map<String, String> patchTaskUser(Map<String, String> fields) {
         Task task = taskRepository.findById(UUID.fromString(fields.get("id"))).orElse(null);
         if (task == null) throw new ResourceNotFoundException("Task", "id", fields.get("id"));
 
         for (Map.Entry<String, String> entry : fields.entrySet()) {
-            switch (entry.getValue()) {
+            switch (entry.getKey()) {
                 case "title":
                     task.setTitle(fields.get("title"));
                     break;
@@ -77,6 +77,35 @@ public class TaskServiceImpl implements TaskService {
                     break;
                 case "status":
                     task.setStatus(fields.get("status"));
+                    break;
+            }
+        }
+
+        taskRepository.save(task);
+        return fields;
+    }
+
+    @Override
+    public Map<String, String> patchTaskProductOwner(Map<String, String> fields) {
+        Task task = taskRepository.findById(UUID.fromString(fields.get("id"))).orElse(null);
+        if (task == null) throw new ResourceNotFoundException("Task", "id", fields.get("id"));
+
+        for (Map.Entry<String, String> entry : fields.entrySet()) {
+            switch (entry.getKey()) {
+                case "title":
+                    task.setTitle(fields.get("title"));
+                    break;
+                case "description":
+                    task.setDescription(fields.get("description"));
+                    break;
+                case "status":
+                    task.setStatus(fields.get("status"));
+                    break;
+                case "user_id":
+                    task.setUser_id(UUID.fromString(fields.get("user_id")));
+                    break;
+                case "project_id":
+                    task.setProject_id(UUID.fromString(fields.get("project_id")));
                     break;
             }
         }

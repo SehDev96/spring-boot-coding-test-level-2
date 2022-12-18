@@ -24,7 +24,9 @@ public interface TaskService {
 
     Task updateTask(Task task);
 
-    Map<String,String> patchTask(Map<String,String> fields);
+    Map<String,String> patchTaskUser(Map<String,String> fields);
+
+    Map<String,String> patchTaskProductOwner(Map<String,String> fields);
 
     void deleteTask(UUID id);
 }

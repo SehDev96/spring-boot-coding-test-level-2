@@ -1,9 +1,11 @@
 package com.accenture.codingtest.springbootcodingtest.entity;
 
+import com.accenture.codingtest.springbootcodingtest.constants.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -21,4 +23,7 @@ public class User {
     @Column(name = "password", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @Column(name = "role",nullable = false)
+    private String role;
 }
