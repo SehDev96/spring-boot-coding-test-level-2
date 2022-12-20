@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUsername(user.getUsername()))
             throw new ResourceExistException("Username", user.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        System.out.println("Encoded Password: "+user.getPassword());
         return userRepository.save(user);
     }
 
