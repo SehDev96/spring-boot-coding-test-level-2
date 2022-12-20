@@ -25,13 +25,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceExistException.class)
     public ResponseEntity<ApiErrorResponse> handleResourceExistsException(ResourceExistException exception,
                                                                             WebRequest webRequest) {
-//        ApiErrorResponse apiErrorResponse = new ApiErrorResponse(
-//                HttpStatus.CONFLICT.value(),
-//                HttpStatus.CONFLICT.getReasonPhrase(),
-//                exception.getMessage(),
-//                webRequest.getDescription(false),
-//                new Date()
-//        );
 
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse(
                 HttpStatus.CONFLICT.value(),

@@ -1,7 +1,6 @@
 package com.accenture.codingtest.springbootcodingtest.filters;
 
 import com.accenture.codingtest.springbootcodingtest.model.ApiErrorResponse;
-import com.accenture.codingtest.springbootcodingtest.model.ApiResponse;
 import com.accenture.codingtest.springbootcodingtest.utils.JwtUtils;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
