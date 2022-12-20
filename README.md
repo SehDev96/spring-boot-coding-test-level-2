@@ -1,5 +1,17 @@
 # Getting Started
 
+---
+### Steps to run application  
+1. Clone the repository </br>
+   <em>$ git clone https://github.com/SehDev96/spring-boot-coding-test-level-2.git</em>
+   
+2. Change directory and run docker compose to spin up postgres container. </br>
+   <em>$ cd spring-boot-coding-test-level-2 && docker-compose -f docker/docker-compose.yml up -d</em>
+   
+3. Run the application and the server should be running at port 8080
+
+---
+
 Application Setup (DO THIS FIRST)
 
 1. Fork this repository into your GitHub account (You can create a GitHub account if you don't have one)
