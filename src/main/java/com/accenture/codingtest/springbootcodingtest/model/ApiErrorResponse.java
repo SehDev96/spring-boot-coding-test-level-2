@@ -1,26 +1,18 @@
 package com.accenture.codingtest.springbootcodingtest.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.EqualsAndHashCode;
 
-import java.util.Date;
-
+@EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ApiErrorResponse {
+public class ApiErrorResponse extends BaseResponseModel{
 
-    private boolean success = false;
-    private int response_code;
     private String error;
-    private String message;
-    private Date timestamp = new Date();
 
     public ApiErrorResponse(int response_code, String error, String message) {
-        this.response_code = response_code;
+        super.setSuccess(false);
+        super.setResponse_code(response_code);
+        super.setMessage(message);
         this.error = error;
-        this.message = message;
     }
 }

@@ -27,7 +27,7 @@ public class Task {
     @Column(name = "project_id",nullable = false)
     private UUID project_id;
 
-    @Column(name = "user_id",nullable = false)
+    @Column(name = "user_id")
     private UUID user_id;
 
 }

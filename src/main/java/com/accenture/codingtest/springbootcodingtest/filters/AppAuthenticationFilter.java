@@ -78,6 +78,7 @@ public class AppAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                               HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json");
 
         new ObjectMapper().writeValue(response.getOutputStream(), new ApiErrorResponse(
                 HttpStatus.UNAUTHORIZED.value(),

@@ -1,12 +1,15 @@
 package com.accenture.codingtest.springbootcodingtest.service;
 
 import com.accenture.codingtest.springbootcodingtest.entity.Project;
+import com.accenture.codingtest.springbootcodingtest.entity.Task;
 import com.accenture.codingtest.springbootcodingtest.exceptions.ResourceExistException;
 import com.accenture.codingtest.springbootcodingtest.exceptions.ResourceNotFoundException;
 import com.accenture.codingtest.springbootcodingtest.repository.ProjectRepository;
+import com.accenture.codingtest.springbootcodingtest.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -64,7 +67,6 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(UUID project_id) {
         Project project = projectRepository.findById(project_id).orElse(null);
         if (project == null) throw new ResourceNotFoundException("Project", "id", project_id.toString());
-
         projectRepository.deleteById(project_id);
     }
 }

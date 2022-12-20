@@ -35,6 +35,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UUID getUserIdByUsername(String username) {
+        UUID userId = userRepository.getUserIdByUsername(username);
+        if (userId == null) throw new ResourceNotFoundException("User","username",username);
+        return userId;
+    }
+
+    @Override
     public User createUser(User user) {
         if (userRepository.existsByUsername(user.getUsername()))
             throw new ResourceExistException("Username", user.getUsername());

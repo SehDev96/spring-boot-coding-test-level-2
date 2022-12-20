@@ -3,11 +3,13 @@ package com.accenture.codingtest.springbootcodingtest.controller;
 import com.accenture.codingtest.springbootcodingtest.entity.Task;
 import com.accenture.codingtest.springbootcodingtest.model.ApiResponse;
 import com.accenture.codingtest.springbootcodingtest.service.TaskService;
+import com.accenture.codingtest.springbootcodingtest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,6 +20,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<?> getAllTasks() {
@@ -40,7 +45,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTask(@RequestBody Task task) {
+    public ResponseEntity<?> createTask(@RequestBody Task task, Principal principal) {
+        // if user id is null it will be assign to the product owner by default
+        if(task.getUser_id() == null){
+            UUID user_id = userService.getUserIdByUsername(principal.getName());
+            if(user_id!=null) task.setUser_id(user_id);
+        }
         Task dbTask = taskService.createTask(task);
         return new ResponseEntity<>(new ApiResponse(
                 HttpStatus.CREATED.value(),

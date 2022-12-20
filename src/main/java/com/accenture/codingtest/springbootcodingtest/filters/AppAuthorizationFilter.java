@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class AppAuthorizationFilter extends OncePerRequestFilter {
-
     private JwtUtils jwtUtils = new JwtUtils();
 
     @Override
