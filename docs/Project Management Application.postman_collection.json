@@ -1,0 +1,597 @@
+{
+	"info": {
+		"_postman_id": "a351c46d-dc99-49ec-a116-8c7e0901afb4",
+		"name": "Project Management Application",
+		"description": "This is a collection of API which is available for this Project Management service. There are two possibilities of responses from the API, success reponse and error response. The JSON format the responses are as follow:\n\nSuccess Response:\n\n``` json\n{\n    \"success\": true,\n    \"response_code\": 201,\n    \"message\": \"User has been successfully created!\",\n    \"timestamp\": \"2022-12-20T06:15:34.198+00:00\",\n    \"payload\": {\n        \"id\": \"f75e2039-6ec4-40bf-a14d-f80a08085506\",\n        \"username\": \"testuser\",\n        \"role\": \"USER\"\n    }\n}\n\n```\n\nError Response:\n\n``` json\n{\n    \"success\": false,\n    \"response_code\": 409,\n    \"message\": \"Username :'testuser' already exists!\",\n    \"timestamp\": \"2022-12-20T06:16:02.223+00:00\",\n    \"error\": \"Conflict\"\n}\n\n```\n\nEvery request is authenticated except for the authentication related request. The application uses jwt bearer token authorization mechanism.\n\n- User Management related API can be only access by user with ADMIN role\n- Project Management - only user with ADMIN and PRODUCT_OWNER will be able to create a project. The rest of the operations is accessible all users.\n- Task Management - only user with ADMIN and PRODUCT_OWNER will be able to create a task and assign user to the task. The rest of the operations is accessible by all users.\n    \n\nDefault admin user credentials:\n\n- username: admin\n- password: admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23049696"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Authenticate User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{productUsername}}\",\n    \"password\": \"{{productPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"authenticate"
+							]
+						},
+						"description": "###### Authenticate users with username and password. Returns access token and refresh token for the authenticated user.\n\n##### API Response:\n\n``` json\n{\n    \"success\": true,\n    \"response_code\": 200,\n    \"message\": \"User Authentication Successful!\",\n    \"timestamp\": 1671516832942,\n    \"payload\": {\n        \"access_token\": \"access_token\",\n        \"refresh_token\": \"refresh_token\"\n    }\n}\n\n```"
+					},
+					"response": []
+				}
+			],
+			"description": "This API Request in this folder describes the behaviour of User Authentication related APIs"
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"testuser\",\n    \"password\":\"testuser\",\n    \"role\": \"USER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users/f75e2039-6ec4-40bf-a14d-f80a08085506",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"f75e2039-6ec4-40bf-a14d-f80a08085506"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"testuser\",\n    \"password\":\"testuser\",\n    \"role\":\"USER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users/f75e2039-6ec4-40bf-a14d-f80a08085506",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"f75e2039-6ec4-40bf-a14d-f80a08085506"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch User Details",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"testuser1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users/f75e2039-6ec4-40bf-a14d-f80a08085506",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"f75e2039-6ec4-40bf-a14d-f80a08085506"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains request related to User Management for the application. Only user with ADMIN role can access all the request in this folder."
+		},
+		{
+			"name": "Project Management",
+			"item": [
+				{
+					"name": "Create Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{productOwnerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Data Science Project\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"projects"
+							]
+						},
+						"description": "Only user with role ADMIN or PRODUCT_OWNER will be able to create project."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{productOwnerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/projects/9799ce61-76e0-496d-9f70-773fbfca0b49",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"9799ce61-76e0-496d-9f70-773fbfca0b49"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Projects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{productOwnerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Data",
+									"description": "query by project name",
+									"disabled": true
+								},
+								{
+									"key": "pageIndex",
+									"value": "0",
+									"description": "default = 3",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "4",
+									"description": "default = 0 ",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdDate",
+									"description": "name or createdDate or updatedDate",
+									"disabled": true
+								},
+								{
+									"key": "sortDirection",
+									"value": "ASC",
+									"description": "ASC or DSC",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Project",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"New Data Science Project\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/projects/9799ce61-76e0-496d-9f70-773fbfca0b49",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"9799ce61-76e0-496d-9f70-773fbfca0b49"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Project",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"New Data Science Project\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/projects/9799ce61-76e0-496d-9f70-773fbfca0b49",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"9799ce61-76e0-496d-9f70-773fbfca0b49"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains list of the request related to Project Management related operations. Only user with role PRODUCT_OWNER or ADMIN will be able to create a project."
+		},
+		{
+			"name": "Task Management",
+			"item": [
+				{
+					"name": "Create Task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{productOwnerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Setup database\", \n    \"description\":\"Connect to Postgres database\",\n    \"project_id\":\"9799ce61-76e0-496d-9f70-773fbfca0b49\",\n    \"user_id\":\"cfccecb2-8d16-4542-b610-5c10105a3536\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						},
+						"description": "Only user with role ADMIN or PRODUCT will be able to create task"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{productOwnerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tasks/b5fa9647-95b2-4161-84c7-654c6e394ac6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"b5fa9647-95b2-4161-84c7-654c6e394ac6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{productOwnerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Task (User)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"IN_PROGRESS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tasks/b5fa9647-95b2-4161-84c7-654c6e394ac6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"b5fa9647-95b2-4161-84c7-654c6e394ac6"
+							]
+						},
+						"description": "Patch request for members to change task details. User with role USER will not be able to assign users to a task."
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Task (Product Owner)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\":\"3f438e4e-3084-455e-b417-da5fcbda3701\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/tasks/assign/b5fa9647-95b2-4161-84c7-654c6e394ac6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								"assign",
+								"b5fa9647-95b2-4161-84c7-654c6e394ac6"
+							]
+						},
+						"description": "Patch request for users with ADMIN or PRODUCT_OWNER roles. Will be able to assign users to the task and change other details of the task"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

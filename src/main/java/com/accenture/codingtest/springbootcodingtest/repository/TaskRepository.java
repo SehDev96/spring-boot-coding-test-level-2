@@ -32,4 +32,5 @@ public interface TaskRepository extends JpaRepository<Task, UUID> {
 
     @Query(value = "select t from app_task t where t.user_id= :user_id",nativeQuery = true)
     List<Task> findAllByUser_id(UUID user_id);
+
 }

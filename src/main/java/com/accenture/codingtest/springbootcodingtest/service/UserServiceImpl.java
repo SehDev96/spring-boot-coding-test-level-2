@@ -5,6 +5,7 @@ import com.accenture.codingtest.springbootcodingtest.exceptions.ResourceExistExc
 import com.accenture.codingtest.springbootcodingtest.exceptions.ResourceNotFoundException;
 import com.accenture.codingtest.springbootcodingtest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -31,9 +35,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UUID getUserIdByUsername(String username) {
+        UUID userId = userRepository.getUserIdByUsername(username);
+        if (userId == null) throw new ResourceNotFoundException("User","username",username);
+        return userId;
+    }
+
+    @Override
     public User createUser(User user) {
         if (userRepository.existsByUsername(user.getUsername()))
             throw new ResourceExistException("Username", user.getUsername());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        System.out.println("Encoded Password: "+user.getPassword());
         return userRepository.save(user);
     }
 
