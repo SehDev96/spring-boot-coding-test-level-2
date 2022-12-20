@@ -21,8 +21,14 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping
-    public ResponseEntity<?> getAllProjects(){
-        List<Project> projectList = projectService.getAllProjects();
+    public ResponseEntity<?> getAllProjects(
+            @RequestParam(value = "q",required = false) String q,
+            @RequestParam(value = "pageIndex",defaultValue = "0",required = false) int pageIndex,
+            @RequestParam(value = "pageSize",defaultValue = "3",required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "ASC", required = false) String sortDirection
+    ){
+        List<Project> projectList = projectService.getAllProjects(q,pageIndex,pageSize,sortBy,sortDirection);
         return new ResponseEntity<>( new ApiResponse(
                 HttpStatus.OK.value(),
                 "Successfully retrieved all the projects",
@@ -62,7 +68,8 @@ public class ProjectController {
     }
 
     @PatchMapping("/{project_id}")
-    public ResponseEntity<?> patchProject(@RequestBody Map<String,String> fields){
+    public ResponseEntity<?> patchProject(@PathVariable String project_id,@RequestBody Map<String,String> fields){
+        fields.put("id",project_id);
         Map<String,String> updatedFields = projectService.patchProject(fields);
         return new ResponseEntity<>(new ApiResponse(
                 HttpStatus.OK.value(),

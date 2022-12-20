@@ -8,7 +8,11 @@ import java.util.UUID;
 
 public interface ProjectService {
 
-    List<Project> getAllProjects();
+    List<Project> getAllProjects(String q,
+                                 int pageIndex,
+                                 int pageSize,
+                                 String sortBy,
+                                 String sortDirection);
 
     Project getProjectById(UUID id);
 

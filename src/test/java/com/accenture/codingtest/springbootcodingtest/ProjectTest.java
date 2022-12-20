@@ -3,7 +3,6 @@ package com.accenture.codingtest.springbootcodingtest;
 import com.accenture.codingtest.springbootcodingtest.constants.Role;
 import com.accenture.codingtest.springbootcodingtest.constants.TaskStatus;
 import com.accenture.codingtest.springbootcodingtest.model.ApiAuthResponse;
-import com.accenture.codingtest.springbootcodingtest.service.ProjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;

@@ -7,7 +7,9 @@ CREATE TABLE IF NOT EXISTS app_user (
 
 CREATE TABLE IF NOT EXISTS app_project (
     id uuid NOT NULL PRIMARY KEY,
-    name varchar(255) NOT NULL UNIQUE
+    name varchar(255) NOT NULL UNIQUE,
+    created_date timestamp NOT NULL,
+    updated_date timestamp NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS app_task (
